@@ -1,12 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int linearSearch(int n, int *arr, int key)
+int binarySearch(int n, int *arr, int key)
 {
-  for (int i = 0; i < n; i++)
+  int left = 0, right = n, m;
+  while (left < right)
   {
-    if (arr[i] == key)
-      return i;
+    m = (left + right) / 2;
+    if (key == arr[m])
+      return m;
+    if (arr[m] > key)
+    {
+      right = m;
+    }
+    else
+    {
+      left = m + 1;
+    }
   }
   return -1;
 }
@@ -34,7 +44,7 @@ int main()
 
   for (int i = 0; i < q; i++)
   {
-    if (linearSearch(n, S, T[i]) != -1)
+    if (binarySearch(n, S, T[i]) != -1)
       cnt++;
   }
 
