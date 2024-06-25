@@ -31,27 +31,19 @@ int main()
 {
   int tot = 0;
   int tempArea = 0;
-  int pIdx = 0;
+  int pIdx = -1;
   int puddle[100];
 
   char stack[MAX_STACK_SIZE];
   int top = 0;
 
-  char s[100];
-  char *c = s;
+  char c;
   int elevation = 0;
+  int done = 0;
 
-  scanf("%s", s);
-
-  while (*c)
+  while (scanf("%s", c) && done == 0)
   {
-    if (elevation > 0)
-    {
-      puddle[pIdx] = tempArea;
-      tot += tempArea;
-      pIdx++;
-    }
-    switch (*c)
+    switch (c)
     {
     case '\\':
       push(top, stack, c);
@@ -59,9 +51,13 @@ int main()
       break;
     case '/':
       pop(top, stack);
+      tempArea += (elevation + -1);
       elevation++;
       break;
     case '_':
+      break;
+    case '\n':
+      done = 1;
       break;
     default:
       printf("Invalid character\n");
@@ -69,7 +65,12 @@ int main()
       break;
     }
 
-    c++;
+    if (elevation > 0 || done == 1)
+    {
+      puddle[++pIdx] = tempArea;
+      tot += tempArea;
+      tempArea = 0;
+    }
   }
 
   return EXIT_SUCCESS;
