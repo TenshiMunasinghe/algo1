@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define M 1000000
+#define M 1000003
 #define L 14
 
 char H[M][L]; /* Hash Table */
