@@ -1,77 +1,106 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-#define MAX_STACK_SIZE 100
+#define MAX_LENGTH 20000
 
-int push(int *top, char stack[*top + 1], char x)
+int min(int a, int b)
 {
-  if (*top >= MAX_STACK_SIZE - 1)
-  {
-    printf("Memory overflow\n");
-    exit(1);
-  }
-  (*top)++;
-  stack[*top] = x;
-  return stack[*top];
+  return (a < b) ? a : b;
 }
 
-int pop(int *top, char stack[*top + 1])
+int max(int a, int b)
 {
-  if (*top == 0)
+  return (a > b) ? a : b;
+}
+
+void printArr(int n, int *arr)
+{
+  if (n == 0)
+    return;
+  for (int i = 0; i < n; i++)
+    printf(" %d", arr[i]);
+}
+
+void calculate_flooded_areas(char *terrain, int *totalArea, int *floodCount, int *floodAreas)
+{
+  int len = strlen(terrain);
+
+  // generate height map
+  int heights[len];
+  int waterLevels[len];
+
+  heights[0] = 0;
+  int hasIncrement = 0;
+  for (int i = 0; i < len; i++)
   {
-    printf("Memory underflow\n");
-    exit(1);
+    if (terrain[i] == '\\')
+      heights[i + 1] = heights[i] - 1;
+    else if (terrain[i] == '/')
+    {
+      heights[i + 1] = heights[i] + 1;
+      hasIncrement = 1;
+    }
+    else // '_'
+      heights[i + 1] = heights[i];
   }
-  (*top)--;
-  return stack[*top + 1];
+
+  if (hasIncrement == 0)
+  {
+    return;
+  }
+
+  // water level at the point is the min of left peak and right peak
+  int leftMax = heights[0];
+  for (int i = 0; i <= len; i++)
+  {
+    leftMax = max(leftMax, heights[i]);
+    waterLevels[i] = leftMax;
+  }
+
+  int rightMax = heights[len - 1];
+  for (int i = len; i >= 0; i--)
+  {
+    rightMax = max(rightMax, heights[i]);
+    waterLevels[i] = min(waterLevels[i], rightMax);
+  }
+
+  *totalArea = 0;
+  *floodCount = 0;
+  int currentFlood = 0;
+
+  // printArr(len, heights);
+  // printArr(len, waterLevels);
+
+  for (int i = 0; i <= len; i++)
+  {
+    if (waterLevels[i] > heights[i])
+    {
+      currentFlood += waterLevels[i] - heights[i];
+    }
+    else if (currentFlood > 0)
+    {
+      floodAreas[*floodCount] = currentFlood;
+      *totalArea += currentFlood;
+      (*floodCount)++;
+      currentFlood = 0;
+    }
+  }
 }
 
 int main()
 {
-  int tot = 0;
-  int tempArea = 0;
-  int pIdx = -1;
-  int puddle[100];
+  char terrain[MAX_LENGTH + 1];
+  int totalArea, floodCount;
+  int floodAreas[MAX_LENGTH];
 
-  char stack[MAX_STACK_SIZE];
-  int top = 0;
+  scanf("%s", terrain);
 
-  char c;
-  int elevation = 0;
-  int done = 0;
+  calculate_flooded_areas(terrain, &totalArea, &floodCount, floodAreas);
 
-  while (scanf("%s", c) && done == 0)
-  {
-    switch (c)
-    {
-    case '\\':
-      push(top, stack, c);
-      elevation--;
-      break;
-    case '/':
-      pop(top, stack);
-      tempArea += (elevation + -1);
-      elevation++;
-      break;
-    case '_':
-      break;
-    case '\n':
-      done = 1;
-      break;
-    default:
-      printf("Invalid character\n");
-      exit(1);
-      break;
-    }
-
-    if (elevation > 0 || done == 1)
-    {
-      puddle[++pIdx] = tempArea;
-      tot += tempArea;
-      tempArea = 0;
-    }
-  }
-
-  return EXIT_SUCCESS;
+  printf("%d\n", totalArea);
+  printf("%d", floodCount);
+  printArr(floodCount, floodAreas);
+  printf("\n");
+  return 0;
 }
