@@ -16,8 +16,6 @@ int max(int a, int b)
 
 void printArr(int n, int *arr)
 {
-  if (n == 0)
-    return;
   for (int i = 0; i < n; i++)
     printf(" %d", arr[i]);
 }
