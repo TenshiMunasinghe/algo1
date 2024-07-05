@@ -6,9 +6,9 @@ typedef struct
   int parent;
   int left_child;
   int right_sibling;
-} node;
+} Node;
 
-void initNode(node *node)
+void initNode(Node *node)
 {
   node->parent = -1;
   node->left_child = -1;
@@ -20,7 +20,7 @@ int main()
   int n;
   scanf("%d", &n);
 
-  node tree[n];
+  Node tree[n];
   for (int i = 0; i < n; i++)
     initNode(&tree[i]);
 
@@ -46,7 +46,7 @@ int main()
     printf("node %d: parent = %d, depth = ", i, tree[i].parent);
 
     depth = 0;
-    node *currentNode = &(tree[i]);
+    Node *currentNode = &(tree[i]);
     while (currentNode->parent != -1)
     {
       depth++;
