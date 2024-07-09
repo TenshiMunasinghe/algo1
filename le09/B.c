@@ -33,11 +33,11 @@ int main()
   for (int i = n / 2; i >= 0; i--)
     maxHeapify(n, heap, i);
 
-  for (int i = 0; i < n - 1; i++)
+  for (int i = 0; i < n; i++)
   {
-    printf("%d ", heap[i]);
+    printf(" %d", heap[i]);
   }
-  printf("%d\n", heap[n - 1]);
+  printf("\n");
 
   return 0;
 }

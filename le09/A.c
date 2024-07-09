@@ -18,9 +18,9 @@ int main()
     node = i + 1;
     key = heap[i];
 
-    printf("node %d: key = %d", node, key);
+    printf("node %d: key = %d,", node, key);
 
-    if ((node / 2) - 1 != node)
+    if (node != 1)
     {
       parent = heap[(node / 2) - 1];
       printf(" parent key = %d,", parent);
