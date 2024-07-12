@@ -4,40 +4,44 @@
 #define MAX_SIZE 101
 #define INF 1000000
 
-int min(int a, int b)
+int matrixChainOrder(int p[MAX_SIZE], int n)
 {
-  return a < b ? a : b;
-}
+  int M[n][n];
 
-void matrixChainOrder(int M[MAX_SIZE][MAX_SIZE], int n, int p[MAX_SIZE])
-{
-  for (int i = 0; i < n; i++)
+  // initialize
+  for (int i = 1; i < n; i++)
     M[i][i] = 0;
-  for (int l = 1; l < n; l++)
-    for (int i = 0; i < n - l + 1; i++)
+
+  // l is current chain length
+  for (int l = 2; l < n; l++)
+  {
+    for (int i = 1; i < n - l + 1; i++)
     {
       int j = i + l - 1;
       M[i][j] = INF;
-      for (int k = i; k < j - 1; k++)
+      for (int k = i; k <= j - 1; k++)
       {
-        int q = M[i][k] + M[k + 1][j] + (p[i - 1] * p[k] * p[j]);
-        printf("%d %d %d\n", M[i][k], M[k + 1][j], (p[i - 1] * p[k] * p[j]));
-        M[i][j] = min(M[i][j], q);
+        int q = M[i][k] + M[k + 1][j] + p[i - 1] * p[k] * p[j];
+        if (q < M[i][j]) // replace M[i][j] if computed value is smaller
+          M[i][j] = q;
       }
     }
+  }
+
+  return M[1][n - 1];
 }
 
 // matrixChainOrder(p)
 // n = p.length-1
 // for i = 1 to n
-// m[i, i] = 0
+// M[i, i] = 0
 // for l = 2 to n /* length = the number of matrix */
 // for i = 1 to n-l+1
 // j = i+l-1
-// m[i, j] = INF
+// M[i, j] = INF
 // for k = i to j-1
-// q = m[i,k] + m[k+1, j] + p[i-1]*p[k]*p[j]
-// m[i,j] = min(m[i,j], q)
+// q = M[i,k] + M[k+1, j] + p[i-1]*p[k]*p[j]
+// M[i,j] = min(M[i,j], q)
 
 int main()
 {
@@ -56,11 +60,7 @@ int main()
     p[i + 1] = c;
   }
 
-  int M[MAX_SIZE][MAX_SIZE];
-
-  matrixChainOrder(M, n + 1, p);
-
-  printf("%d\n", M[0][n - 1]);
+  printf("%d\n", matrixChainOrder(p, n + 1));
 
   return 0;
 }
