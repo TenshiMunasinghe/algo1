@@ -20,27 +20,23 @@ IntTuple minWeightIdx(int n, bool *isVisited, int M[n][n])
     if (!isVisited[i])
       continue;
     for (int j = 0; j < n; j++)
-    {
       if (M[i][j] != -1 && M[i][j] < M[idx.x][idx.y] && !isVisited[j])
       {
         idx.x = i;
         idx.y = j;
       }
-    }
   }
   return idx;
 }
 
 int primTotal(int n, int M[n][n])
 {
-  int parent[n];
   bool isVisited[n];
   int total = 0;
 
   for (int i = 0; i < n; i++)
     isVisited[i] = false;
 
-  parent[0] = -1;
   isVisited[0] = true;
 
   for (int i = 0; i < n - 1; i++)
