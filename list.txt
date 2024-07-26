@@ -1,0 +1,53 @@
+le01:
+  A - Insertion Sort
+  B - GCD
+  C - Prime Numbers
+  D - Max Profit
+le02:
+  A - Bubble Sort
+  B - Selection Sort
+  C - Stable Sort
+  D - Shell Sort
+le03:
+  A - Stack
+  B - Queue
+  C - Doubly linked list
+  D - Areas on Cross-Section Diagram
+le04:
+  A - Linear Search
+  B - Binary Search
+  C - Dictionary
+  D - Allocation
+le05:
+  A - Exhaustive Search
+  B - Merge Sort
+  C - Koch Curve
+le06:
+  A - Counting Sort
+  B - Partition
+  C - Quicksort
+le07:
+  A - Rooted Trees
+  B - Binary Trees
+  C - Treewalk
+  D - Reconstruction of Tree
+le08:
+  A - Binary Search Tree 1
+  B - Binary Search Tree 2
+  C - Binary Search Tree 3
+le09:
+  A - Complete Binary Tree
+  B - Max Heap
+le10:
+  A - fibbonacci
+  B - Matrix Chain Multiplication
+  C - Longest Common Subsequence
+le11:
+  A - Graph
+  B - Depth First Search
+  C - Breadth First Search
+le12:
+  A - Min Spanning Tree
+  B - Single Shortest Path
+le13:
+  A - 8 queens
